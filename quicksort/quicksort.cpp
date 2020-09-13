@@ -2,12 +2,6 @@
 #include <vector>
 #include <iostream>
 
-int findPivot(const std::vector<int>& unsortedArray, int startIdx, int endIdx) {
-
-    unsigned int firstLastBiggerIdx = unsortedArray[startIdx] > unsortedArray[endIdx] ? startIdx : endIdx;
-    return unsortedArray[firstLastBiggerIdx] > unsortedArray[(endIdx-startIdx)/2] ? firstLastBiggerIdx : (endIdx-startIdx)/2;    
-}
-
 int partition(std::vector<int>& unsortedArray, int startIdx, int endIdx) {
 
     int pivot = endIdx;
