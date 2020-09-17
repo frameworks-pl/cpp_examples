@@ -33,38 +33,41 @@ class Node {
             //first of all mark myself as visited
             visited = true;
             
+            vistedNodes.push_back(this);            
+            
             std::vector<Node*>::iterator it;
             for (it = nodes.begin(); it < nodes.end(); it++) {
                 if (!(*it)->getVisited()) {
                     (*it)->dfsVisit(vistedNodes);
                 }    
-            }
-            
-            //if there are no more nodes to visit, add myself to visited
-            vistedNodes.push_back(this);
+            }            
 
         }
         
         
-        void bfsVisist(std::queue<Node*> nodesToVisit) {
+        void bfsVisit(std::queue<Node*>& nodesToVisit, std::vector<Node*>& visistedNodes) {
         
             visited = true;
+            visistedNodes.push_back(this);
             
             std::vector<Node*>::iterator it;
-            for (it = nodes.begin(); it > nodes.end(); it++) {
-                if (!(*it)->getVisited()) {
-                nodesToVisit.push(*it);
+            for (it = nodes.begin(); it < nodes.end(); it++) {
+                if (!(*it)->getVisited() && nodesAlreadyInQueue.find(*it) == nodesAlreadyInQueue.end()) {
+                    nodesAlreadyInQueue.insert(std::map<Node*, int>::value_type(*it, 1));
+                    nodesToVisit.push(*it);
                 }
             }
             
             if (!nodesToVisit.empty()) {
-                Node* nextNode = nodesToVisit.pop();
-                nextNode->bfsVisit(nodesToVisit);
+                Node* nextNode = nodesToVisit.front();
+                nodesToVisit.pop();
+                nextNode->bfsVisit(nodesToVisit, visistedNodes);
             }                           
         }
         
 
     protected:
+        static std::map<Node*, int> nodesAlreadyInQueue;
         std::vector<Node*> nodes;
         std::string name;
         bool visited;
@@ -72,6 +75,8 @@ class Node {
         std::queue<Node*> nodesQueue;
 
 };
+
+std::map<Node*, int> Node::nodesAlreadyInQueue;
 
 TEST(Graph, rectangleDFS) {
 
@@ -83,10 +88,10 @@ TEST(Graph, rectangleDFS) {
     pLeftBottom->dfsVisit(visited);
     
     ASSERT_EQ(4, visited.size());
-    ASSERT_EQ("RightBottom", visited[0]->getName());
-    ASSERT_EQ("RightTop", visited[1]->getName());
-    ASSERT_EQ("LeftTop", visited[2]->getName());
-    ASSERT_EQ("LeftBottom", visited[3]->getName());
+    ASSERT_EQ("LeftBottom", visited[0]->getName());
+    ASSERT_EQ("LeftTop", visited[1]->getName());
+    ASSERT_EQ("RightTop", visited[2]->getName());
+    ASSERT_EQ("RightBottom", visited[3]->getName());
     
     std::vector<Node*>::iterator it;
     for (it = visited.begin(); it < visited.end(); it++) {
@@ -96,15 +101,23 @@ TEST(Graph, rectangleDFS) {
                
 }
 
-// TEST(Graph, rectangleBFS) {
-// 
-//     Node* pLeftBottom = new Node("LeftBottom");
-//     Node* pLeftTop = pLeftBottom->add(new Node("RightBottom"))->add(new Node("RightTop"))->add(new Node("LeftTop"));
-//     pLeftTop->add(pLeftBottom);
-//     
-//     std::vector<Node*> visited;
-//     pLeftTop->bfsVisit(visited);
-//     
-//     ASSERT_EQ(    
-//     
-//}
+TEST(Graph, rectangleBFS) {
+
+    Node* pLeftBottom = new Node("LeftBottom");
+    Node* pRightBottom = pLeftBottom->add(new Node("RightBottom"));
+    Node* pLeftTop = pLeftBottom->add(new Node("LeftTop"));
+    Node* pRightTop = pLeftTop->add(new Node("RightTop"));
+    pRightBottom->add(pRightTop);
+    
+
+    std::vector<Node*> nodesVisited;
+    std::queue<Node*> nodesToVisit;
+    pLeftBottom->bfsVisit(nodesToVisit, nodesVisited);
+    
+    ASSERT_EQ(4, nodesVisited.size());
+    ASSERT_EQ("LeftBottom", nodesVisited[0]->getName());
+    ASSERT_EQ("RightBottom", nodesVisited[1]->getName());
+    ASSERT_EQ("LeftTop", nodesVisited[2]->getName());
+    ASSERT_EQ("RightTop", nodesVisited[3]->getName());
+    
+}
