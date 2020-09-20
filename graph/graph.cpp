@@ -41,7 +41,6 @@ class Node {
                     (*it)->dfsVisit(vistedNodes);
                 }    
             }            
-
         }
         
         
@@ -120,4 +119,28 @@ TEST(Graph, rectangleBFS) {
     ASSERT_EQ("LeftTop", nodesVisited[2]->getName());
     ASSERT_EQ("RightTop", nodesVisited[3]->getName());
     
+}
+
+TEST(Graph, rectangleWithExtraNodesBFS) {
+
+    Node* pLeftBottom = new Node("LeftBottom");
+    Node* pRightBottom = pLeftBottom->add(new Node("RightBottom"));
+    Node* pLeftTop = pLeftBottom->add(new Node("LeftTop"));
+    Node* pRightTop = pLeftTop->add(new Node("RightTop"));
+    pRightBottom->add(pRightTop);
+    pLeftBottom->add(new Node("ExtraNode"));
+    pLeftBottom->add(new Node("ExtraNode2"));
+    
+    std::vector<Node*> nodesVisited;
+    std::queue<Node*> nodesToVisit;
+    pLeftBottom->bfsVisit(nodesToVisit, nodesVisited);
+    
+    ASSERT_EQ(6, nodesVisited.size());
+    ASSERT_EQ("LeftBottom", nodesVisited[0]->getName());
+    ASSERT_EQ("RightBottom", nodesVisited[1]->getName());
+    ASSERT_EQ("LeftTop", nodesVisited[2]->getName());
+    ASSERT_EQ("ExtraNode", nodesVisited[3]->getName());
+    ASSERT_EQ("ExtraNode2", nodesVisited[4]->getName()); 
+    ASSERT_EQ("RightTop", nodesVisited[5]->getName());        
+
 }
