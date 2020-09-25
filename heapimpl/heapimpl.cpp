@@ -11,6 +11,7 @@ void swap(std::vector<int>& unsortedArray, int idx1, int idx2) {
 void heapify(std::vector<int>& unsortedArray, int lastNonLeafIdx = -1) {
 
     if (lastNonLeafIdx == -1) {
+        //
         lastNonLeafIdx = unsortedArray.size() / 2 - 1;
     }
     
@@ -40,6 +41,9 @@ void heapSort(std::vector<int>& unsortedArray) {
 
     std::vector<int> sortedArray;
 
+    //build the heap
+    //take the max element from the root node
+    //then remove the root node and place the last element in its place and repeat
     while (unsortedArray.empty() == false) {
         heapify(unsortedArray);
         sortedArray.push_back(unsortedArray.front());
