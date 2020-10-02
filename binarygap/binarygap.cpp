@@ -35,7 +35,6 @@ int solution(int N) {
                 if (*pCurrGap > maxGap) {
                     maxGap = *pCurrGap;
                 }
-                pCurrGap = NULL;
                 currGap = 0;
             }
         } else if (bits[i] == 0) {
