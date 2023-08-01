@@ -2,20 +2,29 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <algorithm>
 
 
 std::vector<std::pair<int, int>> findPairs(const std::vector<int>& sourceNumbers, const int expectedSum) {
 
 	std::vector<std::pair<int, int>> result;
 
+	std::vector<int> sourceNumbersSorted = sourceNumbers;
+	std::sort(sourceNumbersSorted.begin(), sourceNumbersSorted.end(), 
+		[](const int& a, const int& b) -> bool {
+			return a < b;
+		}
+	);
+
+
 	int forwardIdx = 0;
-	int backwardIdx = (int)sourceNumbers.size()-1;
+	int backwardIdx = (int)sourceNumbersSorted.size()-1;
 
-	while (forwardIdx < sourceNumbers.size() && backwardIdx >= 0 && forwardIdx != backwardIdx) {
+	while (forwardIdx < sourceNumbersSorted.size() && backwardIdx >= 0 && forwardIdx != backwardIdx) {
 
-		int currentSum = sourceNumbers[forwardIdx] + sourceNumbers[backwardIdx];
+		int currentSum = sourceNumbers[forwardIdx] + sourceNumbersSorted[backwardIdx];
 		if (currentSum == expectedSum) {
-			result.push_back(std::pair<int, int>(sourceNumbers[forwardIdx], sourceNumbers[backwardIdx]));
+			result.push_back(std::pair<int, int>(sourceNumbersSorted[forwardIdx], sourceNumbersSorted[backwardIdx]));
 			forwardIdx++;
 			backwardIdx--;
 		} else {
@@ -41,6 +50,21 @@ TEST(FindPairs, simpleCase) {
 
 	ASSERT_EQ(3, resultPairs[1].first);
 	ASSERT_EQ(5, resultPairs[1].second);	
+}
+
+TEST(FindParis, simpleCase2) {
+
+	const int EXPECTED_SUM = 8;
+	std::vector<int> sourceNumbers{ 1, 2, 3, 4, 5, 7, 6 };
+	std::vector<std::pair<int, int>> resultPairs = findPairs(sourceNumbers, EXPECTED_SUM);
+
+	ASSERT_EQ(3, resultPairs.size());
+
+	// ASSERT_EQ(1, resultPairs[0].first);
+	// ASSERT_EQ(7, resultPairs[0].second);
+
+	// ASSERT_EQ(3, resultPairs[1].first);
+	// ASSERT_EQ(5, resultPairs[1].second);	
 }
 
 TEST(FindPairs, foursInTheMiddle) {
