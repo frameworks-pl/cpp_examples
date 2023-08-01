@@ -2,6 +2,10 @@
 #include <string>
 #include <vector>
 
+/****************************************************
+ * Find the biggest number of zeros between two
+ * ones in binary representation of decimal number
+ ****************************************************/
 
 void intToBin(int N,std::vector<int>& bits ) {
     
