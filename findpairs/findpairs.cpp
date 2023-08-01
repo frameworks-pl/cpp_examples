@@ -16,7 +16,6 @@ std::vector<std::pair<int, int>> findPairs(const std::vector<int>& sourceNumbers
 		}
 	);
 
-
 	int forwardIdx = 0;
 	int backwardIdx = (int)sourceNumbersSorted.size()-1;
 
@@ -52,7 +51,7 @@ TEST(FindPairs, simpleCase) {
 	ASSERT_EQ(5, resultPairs[1].second);	
 }
 
-TEST(FindParis, simpleCase2) {
+TEST(FindParis, vectorUnsorted) {
 
 	const int EXPECTED_SUM = 8;
 	std::vector<int> sourceNumbers{ 1, 2, 3, 4, 5, 7, 6 };
