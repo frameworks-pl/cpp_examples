@@ -1,40 +1,62 @@
-CXX = g++
-CXXFLAGS := -Wall -std=c++11
-INC = -I./include -I./include/gtest -I./include/gtest/internal -I. -I./target/obj
-OBJ_DIR = target/obj
-SRC_FILES = src/gtest.cc \
-		src/gtest_main.cc \
-		src/gtest-death-test.cc \
-		src/gtest-filepath.cc \
-		src/gtest-matchers.cc \
-		src/gtest-port.cc \
-		src/gtest-printers.cc \
-		src/gtest-test-part.cc \
-		src/gtest-typed-test.cc
-TEST_FILES = heap/heap.cpp
-OBJ_FILES = $(patsubst %.cc, $(OBJ_DIR)/%.o, $(notdir $(SRC_FILES)))
-OBJ_TEST_FILES = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(TEST_FILES)))
-#GTEST_SRC_FILES = $(wildcard src/*.cc)
-#GTEST_OBJ_FILES = $(wildcard src/*.obj)
+# Makefile for building Google Test and test files
 
-GTEST_OBJ_FILES = $(wildcard target/obj/*.o)
+# Compiler and flags
+CXX := g++
+CXXFLAGS := -Wall -Wextra -std=c++11 -I.
 
-default: build
+# Directory where Google Test source code is located
+GTEST_DIR := .
 
-build: $(OBJ_FILES) $(OBJ_TEST_FILES)
-	mkdir -p target
+# Directory where Google Test header files are located
+GTEST_INC_DIR := $(GTEST_DIR)/include
 
-$(OBJ_DIR)/%.o: heap/*.cpp
-	mkdir -p $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+# Directory where Google Test source files are located
+GTEST_SRC_DIR := $(GTEST_DIR)/src
 
-$(OBJ_DIR)/%.o: src/%.cc
-	mkdir -p $(OBJ_DIR)	
-	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@ 
+# List of Google Test source files to be compiled
+GTEST_SRCS := $(GTEST_SRC_DIR)/gtest-all.cc $(GTEST_SRC_DIR)/gtest_main.cc
 
-link:
-	ld -I$(OBJ_DIR) target/obj/gtest-typed-test.o target/obj/gtest-test-part.o target/obj/gtest-printers.o target/obj/gtest-port.o target/obj/gtest-matchers.o target/obj/gtest-filepath.o target/obj/gtest-death-test.o target/obj/gtest_main.o target/obj/gtest.o target/obj/heap.o -o target/gtest.exe
-	
+# Directory where the built Google Test object files will be placed
+BUILD_DIR := build
 
+# Output binary name
+OUTPUT_BIN := test
+
+# Object files to be built from Google Test source files
+GTEST_OBJS := $(addprefix $(BUILD_DIR)/, $(notdir $(GTEST_SRCS:.cc=.o)))
+
+# Directory where the test source files are located
+TEST_DIR := ./heap
+
+# List of test source files to be compiled
+TEST_SRCS := $(wildcard $(TEST_DIR)/*.cpp)
+
+# Object files to be built from test source files
+TEST_OBJS := $(addprefix $(BUILD_DIR)/, $(notdir $(TEST_SRCS:.cpp=.o)))
+
+# Default target
+all: $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_BIN)
+
+# Rule to create the build directory
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# Rule to build Google Test object files
+$(BUILD_DIR)/%.o: $(GTEST_SRC_DIR)/%.cc
+	$(CXX) $(CXXFLAGS) -I$(GTEST_INC_DIR) -c $< -o $@
+
+# Rule to build test object files
+$(BUILD_DIR)/%.o: $(TEST_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -I$(GTEST_INC_DIR) -c $< -o $@
+
+# Rule to build the test binary
+$(BUILD_DIR)/$(OUTPUT_BIN): $(GTEST_OBJS) $(TEST_OBJS)
+	$(CXX) $(CXXFLAGS) -I$(GTEST_INC_DIR) $(GTEST_OBJS) $(TEST_OBJS) -o $@
+
+# Clean up generated files
 clean:
-	rm -rf target
+	rm -rf $(BUILD_DIR)
+
+# Run the tests
+test: all
+	./$(BUILD_DIR)/$(OUTPUT_BIN)
