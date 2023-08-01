@@ -1,6 +1,6 @@
 CXX = g++
-CXXFLAGS = -Wall
-INC = -I./include -I./include/gtest -I./include/gtest/internal -I.
+CXXFLAGS := -Wall -std=c++11
+INC = -I./include -I./include/gtest -I./include/gtest/internal -I. -I./target/obj
 OBJ_DIR = target/obj
 SRC_FILES = src/gtest.cc \
 		src/gtest_main.cc \
@@ -21,19 +21,19 @@ GTEST_OBJ_FILES = $(wildcard target/obj/*.o)
 
 default: build
 
-build: $(OBJ_FILES) 
+build: $(OBJ_FILES) $(OBJ_TEST_FILES)
 	mkdir -p target
 
-# $(OBJ_DIR)/%.o: heap/*.cpp
-# 	mkdir -p $(OBJ_DIR)
-# 	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@ 
+$(OBJ_DIR)/%.o: heap/*.cpp
+	mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 $(OBJ_DIR)/%.o: src/%.cc
 	mkdir -p $(OBJ_DIR)	
 	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@ 
 
 link:
-	$(CXX) $(CXXFLAGS) target/obj/gtest-typed-test.o target/obj/gtest-test-part.o target/obj/gtest-printers.o target/obj/gtest-port.o target/obj/gtest-matchers.o target/obj/gtest-filepath.o target/obj/gtest-death-test.o target/obj/gtest_main.o target/obj/gtest.o -o target/gtest.exe
+	ld -I$(OBJ_DIR) target/obj/gtest-typed-test.o target/obj/gtest-test-part.o target/obj/gtest-printers.o target/obj/gtest-port.o target/obj/gtest-matchers.o target/obj/gtest-filepath.o target/obj/gtest-death-test.o target/obj/gtest_main.o target/obj/gtest.o target/obj/heap.o -o target/gtest.exe
 	
 
 clean:
