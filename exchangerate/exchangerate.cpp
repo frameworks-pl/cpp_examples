@@ -57,6 +57,31 @@ class Currency {
             return -1;
         } 
 
+        double getRate(map<string, Currency*>& currencies,const string& _toCurrency, double _rate = 1.0) {
+
+            map<string, double>::iterator it = exchangeRates.find(_toCurrency);
+            if (it != exchangeRates.end()) {
+                //our currency has exchange rate to target currency (we are done)
+                return _rate * it->second;
+            } else {
+                //let's check if we have rates of 
+                for (it = exchangeRates.begin(); it != exchangeRates.end(); it ++) {
+
+                    //find currency in map
+                    map<string, Currency*>::iterator currIt = currencies.find(it->first);
+                    if (currIt != currencies.end()) {
+                        double rate = currIt->second->getRate(currencies, _toCurrency, _rate*it->second);
+                        if (rate > 0) {
+                            return rate;
+                        }
+                    }                
+                }
+
+            }
+
+            return -1;
+        }
+
     protected:
         string name;
         map<string, double> exchangeRates;
@@ -67,15 +92,22 @@ class CurrencyMap {
 
     public:
 
+        CurrencyMap(const std::vector<ExchangeRate>& exchangeRates) {
+            build(exchangeRates);
+        }
+
         map<string, Currency*> currencies;
 
         void build(const std::vector<ExchangeRate>& exchangeRates) {
             vector<ExchangeRate>::const_iterator it;
             for (it = exchangeRates.begin(); it < exchangeRates.end(); it++) {
                 map<string, Currency*>::iterator currIt = currencies.find(it->toCurrency);
+
                 if (currIt != currencies.end()) {
+                    //Currency already in the map, we will just update rate
                     currIt->second->updateRate(it->toCurrency, it->rate);
                 } else {
+                    //Currency not in the map, adding it
                     Currency* pCurrency = new Currency(it->fromCurrency);
                     pCurrency->updateRate(it->toCurrency, it->rate);
                     currencies.insert(map<string, Currency*>::value_type(it->fromCurrency, pCurrency));
@@ -84,9 +116,20 @@ class CurrencyMap {
 
         }
 
+        double getRate(const string& fromCurrency, const string& toCurrency) {
+            
+            map<string, Currency*>::iterator it = currencies.find(fromCurrency);
+
+            //check if we even have the 'from' currency
+            if (it != currencies.end()) {
+                return it->second->getRate(currencies, toCurrency);                
+            }
+
+            return -1;
+
+        }
+
 };
-
-
 
 
 TEST(ExchangeRate, buildGraph) {
@@ -96,12 +139,9 @@ TEST(ExchangeRate, buildGraph) {
         ExchangeRate("GBP", "JPY", 182.78)
     };    
 
-    CurrencyMap currencyMap;
-    currencyMap.build(exchangeRates);
+    CurrencyMap currencyMap(exchangeRates);
 
-    
     ASSERT_EQ(2, currencyMap.currencies.size());
-    //ASSERT_TRUE(abs(currencyMap.currencies["USD"]->getExchangeRate('GBP') - 0.78) > std::numeric_limits<double>::epsilon());
 
     ASSERT_TRUE(abs(currencyMap.currencies["USD"]->getExchangeRate("GBP") - 0.78) < std::numeric_limits<double>::epsilon());
     ASSERT_TRUE(abs(currencyMap.currencies["GBP"]->getExchangeRate("JPY") - 182.78) < std::numeric_limits<double>::epsilon());
@@ -109,18 +149,18 @@ TEST(ExchangeRate, buildGraph) {
     //testing non existing exchange rates
     ASSERT_TRUE(abs(currencyMap.currencies["USD"]->getExchangeRate("JPY") + 1) < std::numeric_limits<double>::epsilon());
 
-
 }
 
+TEST(ExchangeRate, findRate) {
 
-// TEST(ExchangeRate, simpleScenario) {
+    std::vector<ExchangeRate> exchangeRates {
+        ExchangeRate("USD", "GBP", 0.78),
+        ExchangeRate("GBP", "JPY", 182.78)
+    };    
 
-//     std::vector<CurrencyExchangeRate> exchangeRates {
-//         CurrencyExchangeRate("USD", "GBP", 0.78),
-//         CurrencyExchangeRate("GBP", "JPY", 182.78)
-//     };
+    CurrencyMap currencyMap(exchangeRates);
 
-//     ASSERT_TRUE(calculateRate(exchangeRates, "USD", "JPY") - 142.5684 > 0.0001);
+    ASSERT_TRUE(currencyMap.getRate("USD", "JPY") - .78 * 182.78 < std::numeric_limits<double>::epsilon());
+}
 
-// }
 
