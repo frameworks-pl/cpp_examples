@@ -1,5 +1,6 @@
 #include <..\include\gtest\gtest.h>
 #include <thread>
+#include <mutex>
 
 
 void threadFunction(int* pResult) {
@@ -34,12 +35,16 @@ TEST(Threads, ThreadPoolWithJoin) {
     int result = 0;
     int* pResult = &result;
     std::vector<std::thread> threads;
+    static std::mutex m;
 
 
     for (int i = 0; i < 10; i++)  {
         threads.emplace_back(            
             [pResult, i]() {
+
+                m.lock();
                 *pResult += i;
+                m.unlock();
             }
         );
         
@@ -50,7 +55,5 @@ TEST(Threads, ThreadPoolWithJoin) {
     }
 
     ASSERT_EQ(45, result);
-
-
 
 }
