@@ -1,22 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="binarygap\binarygap.cpp">
+      <Filter>binarygap</Filter>
+    </ClCompile>
+    <ClCompile Include="classinitialization\classinitialization.cpp">
+      <Filter>classinitialization</Filter>
+    </ClCompile>
+    <ClCompile Include="clientserverqueue\clientserverqueue.cpp">
+      <Filter>clientserverqueue</Filter>
+    </ClCompile>
+    <ClCompile Include="exchangerate\exchangerate.cpp">
+      <Filter>exchangerate</Filter>
+    </ClCompile>
+    <ClCompile Include="findpairs\findpairs.cpp">
+      <Filter>findpairs</Filter>
+    </ClCompile>
+    <ClCompile Include="findrectangles\findrectangles.cpp">
+      <Filter>findrectangles</Filter>
+    </ClCompile>
+    <ClCompile Include="graph\graph.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="heap\heap.cpp">
+      <Filter>heap</Filter>
+    </ClCompile>
+    <ClCompile Include="heapimpl\heapimpl.cpp">
+      <Filter>heapimpl</Filter>
+    </ClCompile>
+    <ClCompile Include="pointsincircle\pointsincircle.cpp">
+      <Filter>pointsincircle</Filter>
+    </ClCompile>
+    <ClCompile Include="printenum\printenum.cpp">
+      <Filter>printenum</Filter>
+    </ClCompile>
+    <ClCompile Include="quicksort\quicksort.cpp">
+      <Filter>quicksort</Filter>
+    </ClCompile>
+    <ClCompile Include="stringpermutations\stringpermutations.cpp">
+      <Filter>stringpermutations</Filter>
+    </ClCompile>
+    <ClCompile Include="threads\threads.cpp">
+      <Filter>threads</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cpp_examples.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="binarygap">
+      <UniqueIdentifier>{dade0bf8-3a41-4083-879b-a14937519201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classinitialization">
+      <UniqueIdentifier>{da509e00-21ff-43d7-802c-64c1ef8abe59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="clientserverqueue">
+      <UniqueIdentifier>{289cf28d-6c4f-411a-a82a-9f7408611e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="exchangerate">
+      <UniqueIdentifier>{bf953c3c-d499-4748-9855-34e837c2c89e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="findpairs">
+      <UniqueIdentifier>{9bf52751-4645-4263-b8ae-a6f4c3d94bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="findrectangles">
+      <UniqueIdentifier>{8eb7c234-41bc-43e4-8ae9-39dfc8fe3042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graph">
+      <UniqueIdentifier>{b09061e5-afe9-4957-bf7d-89e50889a3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="heap">
+      <UniqueIdentifier>{b8537941-1bcd-46ff-93e1-6fd37aaceb2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="heapimpl">
+      <UniqueIdentifier>{81efe79c-4b2d-48a4-b499-92f40ace195f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pointsincircle">
+      <UniqueIdentifier>{0eebea74-aa4b-4765-892a-e156fc3a1974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="printenum">
+      <UniqueIdentifier>{7b218696-9131-47e1-892a-9f63cf539b3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="quicksort">
+      <UniqueIdentifier>{5fe5d87e-4dba-4dbc-a83f-1f3f7c15b50f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stringpermutations">
+      <UniqueIdentifier>{5d9ef278-2e57-4415-9b39-fd2155447e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="threads">
+      <UniqueIdentifier>{4ab53a67-51a6-46aa-ba44-ca90f4db0e7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

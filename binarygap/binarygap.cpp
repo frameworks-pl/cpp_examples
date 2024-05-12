@@ -1,4 +1,4 @@
-#include "../include/gtest/gtest.h"
+#include "pch.h"
 #include <string>
 #include <vector>
 
@@ -54,7 +54,7 @@ int solution(int N) {
 }
 
 TEST(BinaryGap, simpleTest) {
-    ASSERT_EQ(1, solution(5));
+    ASSERT_EQ((int)1, solution(5));
 }
 
 TEST(BinaryGap, differentNumbers) {

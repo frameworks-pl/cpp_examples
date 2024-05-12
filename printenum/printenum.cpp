@@ -1,4 +1,4 @@
-#include <../include/gtest/gtest.h>
+#include "pch.h"
 #include <iostream>
 
 #define ENUM_VALUES(PREFIX) PREFIX##A, PREFIX##B, PREFIX##C 

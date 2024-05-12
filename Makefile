@@ -26,7 +26,7 @@ OUTPUT_BIN := test
 GTEST_OBJS := $(addprefix $(BUILD_DIR)/, $(notdir $(GTEST_SRCS:.cc=.o)))
 
 # Directory where the test source files are located
-TEST_DIR := ./threads
+TEST_DIR := ./clientserverqueue
 
 # List of test source files to be compiled
 TEST_SRCS := $(wildcard $(TEST_DIR)/*.cpp)
