@@ -100,19 +100,20 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="binarygap\binarygap.cpp" />
-    <ClCompile Include="classinitialization\classinitialization.cpp" />
-    <ClCompile Include="clientserverqueue\clientserverqueue.cpp" />
-    <ClCompile Include="exchangerate\exchangerate.cpp" />
-    <ClCompile Include="findpairs\findpairs.cpp" />
-    <ClCompile Include="findrectangles\findrectangles.cpp" />
-    <ClCompile Include="graph\graph.cpp" />
-    <ClCompile Include="heapimpl\heapimpl.cpp" />
-    <ClCompile Include="heap\heap.cpp" />
-    <ClCompile Include="pointsincircle\pointsincircle.cpp" />
-    <ClCompile Include="printenum\printenum.cpp" />
-    <ClCompile Include="quicksort\quicksort.cpp" />
-    <ClCompile Include="stringpermutations\stringpermutations.cpp" />
+    <ClCompile Include="tasks\binarygap.cpp" />
+    <ClCompile Include="tasks\classinitialization.cpp" />
+    <ClCompile Include="tasks\clientserverqueue.cpp" />
+    <ClCompile Include="tasks\exchangerate.cpp" />
+    <ClCompile Include="tasks\findpairs.cpp" />
+    <ClCompile Include="tasks\findrectangles.cpp" />
+    <ClCompile Include="tasks\graph.cpp" />
+    <ClCompile Include="tasks\heap.cpp" />
+    <ClCompile Include="tasks\heapimpl.cpp" />
+    <ClCompile Include="tasks\pointsincircle.cpp" />
+    <ClCompile Include="tasks\printenum.cpp" />
+    <ClCompile Include="tasks\quicksort.cpp" />
+    <ClCompile Include="tasks\stringpermutations.cpp" />
+    <ClCompile Include="tasks\threads.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -120,7 +121,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="threads\threads.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
