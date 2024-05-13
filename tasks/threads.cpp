@@ -39,6 +39,7 @@ TEST(Threads, ThreadPoolWithJoin) {
 
 
     for (int i = 0; i < 10; i++)  {
+        //using emplace_back to avoid creation of temporary object and then copying it
         threads.emplace_back(            
             [pResult, i]() {
 
@@ -54,6 +55,11 @@ TEST(Threads, ThreadPoolWithJoin) {
         thread.join();
     }
 
-    ASSERT_EQ(45, result);
+    int gold = 0;
+    for (int i = 0; i < 10; i++) {
+        gold += i;
+    }
+
+    ASSERT_EQ(gold, result);
 
 }
