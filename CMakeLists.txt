@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.29.3)
+cmake_minimum_required(VERSION 3.22.1)
 project(cpp_examples)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -28,3 +28,4 @@ target_precompile_headers(cpp_examples PUBLIC pch.h)
 
 include(GoogleTest)
 gtest_discover_tests(cpp_examples)
+add_test(cpp_examples cpp_examples)
