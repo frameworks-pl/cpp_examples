@@ -14,7 +14,8 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 #define executable target
-add_executable(cpp_examples tasks/binarygap.cpp)
+file(GLOB TASK_SOURCES "tasks/*.cpp")
+add_executable(cpp_examples ${TASK_SOURCES})
 target_include_directories(cpp_examples PRIVATE ${CMAKE_SOURCE_DIR})
 
 #link google test libraries
