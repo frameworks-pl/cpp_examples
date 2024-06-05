@@ -15,11 +15,15 @@ enable_testing()
 
 #define executable target
 file(GLOB TASK_SOURCES "tasks/*.cpp")
-add_executable(cpp_examples ${TASK_SOURCES})
+file(GLOB GMOCK_SOURCES "gmock/*.h" "gmock/*.cpp")
+add_executable(cpp_examples ${TASK_SOURCES}
+  ${GMOCK_SOURCES}
+)
+
 target_include_directories(cpp_examples PRIVATE ${CMAKE_SOURCE_DIR})
 
 #link google test libraries
-target_link_libraries(cpp_examples PRIVATE gtest gtest_main)
+target_link_libraries(cpp_examples PRIVATE gtest gtest_main gmock_main)
 
 #include google test directories
 target_include_directories(cpp_examples PRIVATE ${gtest_SOURCE_DIR})
