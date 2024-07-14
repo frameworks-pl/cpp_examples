@@ -1,0 +1,10 @@
+services:
+  cpp_examples:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: cpp_examples
+    volumes:
+      - .:/usr/src/cpp_examples
+    working_dir: /usr/src/cpp_examples
+    command: sleep infinity

@@ -2,7 +2,7 @@
 
 Project that uses cmake, gtest
 
-##How to build
+## How to build
 
 1. generate project build system 
     ```
