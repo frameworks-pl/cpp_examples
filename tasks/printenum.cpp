@@ -2,9 +2,9 @@
 #include <iostream>
 
 #define ENUM_VALUES(PREFIX) PREFIX##A, PREFIX##B, PREFIX##C 
-#define ENUM_CLASS_MAKER(NAME) enum class NAME { ENUM_VALUES() };
+#define ENUM_CLASS_MAKER(NAME) enum class NAME { ENUM_VALUES(NAME) };
 ENUM_CLASS_MAKER(MyEnum)
-std::vector<MyEnum> MyEnumAllValues { ENUM_VALUES(MyEnum::) };
+std::vector<MyEnum> MyEnumAllValues { ENUM_VALUES(MyEnum::MyEnum) };
 
 void displayAllMyEnumValues() {
 	std::vector<MyEnum>::const_iterator it;
