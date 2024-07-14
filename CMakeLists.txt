@@ -20,6 +20,13 @@ add_executable(cpp_examples ${TASK_SOURCES}
   ${GMOCK_SOURCES}
 )
 
+#target gcov (make gcov) to build coverage while running test target
+add_custom_target(gcov
+    COMMAND mkdir -p coverage
+    COMMAND ${CMAKE_MAKE_PROGRAM} test
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    )
+
 target_include_directories(cpp_examples PRIVATE ${CMAKE_SOURCE_DIR})
 
 #link google test libraries
