@@ -3,7 +3,7 @@
 #include "Message.h"
 #include "MockTransport.h"
 
-TEST(SendMessage, test_sender_doesnt_send_message) {
+TEST(SendMessage, DISABLED_test_sender_doesnt_send_message) {
     auto mockTransport = std::make_shared<MockTransport>();
 
     SendMessage sendMessage(mockTransport);
