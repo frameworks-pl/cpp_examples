@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16.3)
 project(cpp_examples)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)

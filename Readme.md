@@ -12,3 +12,6 @@ Project that uses cmake, gtest
     ```
     cmake --build build
     ```
+3. runt gcov
+   cd build
+   make gcov
